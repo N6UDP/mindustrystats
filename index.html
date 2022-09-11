@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>Mindustry settings.bin processing and stats</title>
+    <script src="https://cdn.jsdelivr.net/npm/kaitai-struct@0.10.0/KaitaiStream.js"></script>
+    <script>var exports = {}</script>
+    <script src="https://cdn.jsdelivr.net/npm/@shelacek/ubjson@1.1.1" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.6.1" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@observablehq/stdlib@3.20.0"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spcss@0.8.0">
+</head>
+
+<body>
+    <script>
+            // This is a generated file! Please edit source .ksy file and use kaitai-struct-compiler to rebuild (see technical section)
+            (function (root, factory) {
+                if (typeof define === 'function' && define.amd) {
+                    define(['kaitai-struct/KaitaiStream'], factory);
+                } else if (typeof module === 'object' && module.exports) {
+                    module.exports = factory(require('kaitai-struct/KaitaiStream'));
+                } else {
+                    root.MindustrySettings = factory(root.KaitaiStream);
+                }
+            }(typeof self !== 'undefined' ? self : this, function (KaitaiStream) {
+                var MindustrySettings = (function () {
+                    function MindustrySettings(_io, _parent, _root) {
+                        this._io = _io;
+                        this._parent = _parent;
+                        this._root = _root || this;
+
+                        this._read();
+                    }
+                    MindustrySettings.prototype._read = function () {
+                        this.amount = this._io.readU4be();
+                        this.values = [];
+                        for (var i = 0; i < this.amount; i++) {
+                            this.values.push(new MindustryValue(this._io, this, this._root));
+                        }
+                    }
+
+                    var BoolValue = MindustrySettings.BoolValue = (function () {
+                        function BoolValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        BoolValue.prototype._read = function () {
+                            this.bool = this._io.readU1();
+                        }
+
+                        return BoolValue;
+                    })();
+
+                    var FloatValue = MindustrySettings.FloatValue = (function () {
+                        function FloatValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        FloatValue.prototype._read = function () {
+                            this.float = this._io.readU4be();
+                        }
+
+                        return FloatValue;
+                    })();
+
+                    var MindustryValue = MindustrySettings.MindustryValue = (function () {
+                        function MindustryValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        MindustryValue.prototype._read = function () {
+                            this.key = new StringValue(this._io, this, this._root);
+                            this.type = this._io.readU1();
+                            switch (this.type) {
+                                case 0:
+                                    this.value = new BoolValue(this._io, this, this._root);
+                                    break;
+                                case 4:
+                                    this.value = new StringValue(this._io, this, this._root);
+                                    break;
+                                case 1:
+                                    this.value = new IntValue(this._io, this, this._root);
+                                    break;
+                                case 3:
+                                    this.value = new FloatValue(this._io, this, this._root);
+                                    break;
+                                case 5:
+                                    this.value = new BinaryValue(this._io, this, this._root);
+                                    break;
+                                case 2:
+                                    this.value = new LongValue(this._io, this, this._root);
+                                    break;
+                            }
+                        }
+
+                        return MindustryValue;
+                    })();
+
+                    var IntValue = MindustrySettings.IntValue = (function () {
+                        function IntValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        IntValue.prototype._read = function () {
+                            this.int = this._io.readU4be();
+                        }
+
+                        return IntValue;
+                    })();
+
+                    var StringValue = MindustrySettings.StringValue = (function () {
+                        function StringValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        StringValue.prototype._read = function () {
+                            this.strlength = this._io.readU2be();
+                            this.string = KaitaiStream.bytesToStr(KaitaiStream.bytesTerminate(this._io.readBytes(this.strlength), 0, false), "UTF-8");
+                        }
+
+                        return StringValue;
+                    })();
+
+                    var LongValue = MindustrySettings.LongValue = (function () {
+                        function LongValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        LongValue.prototype._read = function () {
+                            this.long = this._io.readU8be();
+                        }
+
+                        return LongValue;
+                    })();
+
+                    var BinaryValue = MindustrySettings.BinaryValue = (function () {
+                        function BinaryValue(_io, _parent, _root) {
+                            this._io = _io;
+                            this._parent = _parent;
+                            this._root = _root || this;
+
+                            this._read();
+                        }
+                        BinaryValue.prototype._read = function () {
+                            this.length = this._io.readU4be();
+                            this.bytes = this._io.readBytes(this.length);
+                        }
+
+                        return BinaryValue;
+                    })();
+
+                    return MindustrySettings;
+                })();
+                return MindustrySettings;
+            }));
+
+    </script>
+    <h1>
+        <center>Mindustry Settings Processor</center>
+    </h1>
+
+    <div id="dInputs">
+        <h2>Select a <i>copy</i> of your settings.bin</h2>
+        <p><b><i>Warning</i>:</b> I have seen some odd behavior if you select your live settings.bin and Mindustry is
+            running</p>
+        <p><input type='file' id='file-input' /></p>
+        <p>Notes:
+        <ul>
+            <li>All processing is done locally</li>
+            <li>Renamed sectors are not currently handled - as far as I can tell that data isn't in settings.bin but I haven't gone hunting as I haven't renamed many sectors</li>
+        </ul>
+        </p>
+        <p>Or load a <a href="#" onclick="LoadFile(null, true)">Sample</a></p>
+        <p id="stats"></p>
+    </div>
+
+    <div id="dGraphs">
+        <h2>Graphs</h2>
+        <h3>Production Zoomable Sunbursts</h3>
+        <h4>Production By Sector</h4>
+        <div id="prodbysectorsunburst"></div>
+        <h4>Production By Type</h4>
+        <div id="prodbytypesunburst"></div>
+        <h3>Export Zoomable Sunbursts</h3>
+        <h4>Exports By Sector</h4>
+        <div id="exportbysectorsunburst"></div>
+        <h4>Exports By Type</h4>
+        <div id="exportbytypesunburst"></div>
+        <h3>Production Zoomable Treemaps</h3>
+        <h4>Production By Sector</h4>
+        <div id="prodbysectormap"></div>
+        <h4>Production By Type</h4>
+        <div id="prodbytypemap"></div>
+        <h3>Export Zoomable Treemaps</h3>
+        <h4>Exports By Sector</h4>
+        <div id="exportbysectormap"></div>
+        <h4>Exports By Type</h4>
+        <div id="exportbytypemap"></div>
+    </div>
+    <div id="dOutputs">
+        <h2>Outputs</h2>
+        <details>
+            <summary>Click here for production CSV of occupied sectors; <a id="productiondownload">download here</a>
+            </summary>
+            <pre id="production">
+        </pre>
+        </details>
+        <details>
+            <summary>Click here for export CSV of occupied sectors; <a id="exportsdownload">download here</a></summary>
+            <pre id="exports">
+        </pre>
+        </details>
+        <details>
+            <summary>Click here for raw JSON decode of occupied sectors; <a id="rawjsondownload">download here</a>
+            </summary>
+            <pre id="rawjson">
+        </pre>
+        </details>
+    </div>
+    <h2>License</h2>
+    <details>
+        <summary>Click here for the license</summary>
+        <pre>
+The MIT License (MIT)
+Copyright (c) 2022 Lee Burton
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </pre>
+    </details>
+    <h2>Technical</h2>
+    <p>This uses Kaitai to parse the file initially and then <a
+            href="https://www.npmjs.com/package/@shelacek/ubjson">ubjson</a> to parse the underlying sector info.
+        Tree maps and sunbursts are then displayed using <a href="https://d3js.org/">d3js</a>.
+        This was originally done in an ugly mess of Kaitai/C#/PowerShell but I figured a single html page is easier to
+        ship about / host ;)</p>
+    <details>
+        <summary>
+            Click to see the <a href="https://kaitai.io/">Kaitai</a> source used to parse the file
+        </summary>
+        <pre>
+        <code>
+meta:
+  id: mindustry_settings
+  file-extension: bin
+  endian: be
+seq:
+  - id: amount
+    type: u4
+  - id: values
+    type: mindustry_value
+    repeat: expr
+    repeat-expr: amount
+
+types:
+  mindustry_value:
+    seq:
+      - id: key
+        type: string_value
+      - id: type
+        type: u1
+      - id: value
+        type:
+          switch-on: type
+          cases:
+            0: bool_value
+            1: int_value
+            2: long_value
+            3: float_value
+            4: string_value
+            5: binary_value
+  binary_value:
+    seq:
+      - id: length
+        type: u4
+      - id: bytes
+        size: length
+  bool_value:
+    seq:
+      - id: bool
+        type: u1
+  int_value:
+    seq:
+      - id: int
+        type: u4
+  long_value:
+    seq:
+      - id: long
+        type: u8
+  float_value:
+    seq:
+      - id: float
+        type: u4
+  string_value:
+    seq:
+      - id: strlength
+        type: u2
+      - id: string
+        type: strz
+        encoding: UTF-8
+        size: strlength
+    </code>
+    </pre>
+    </details>
+    <p>The rest of the source including the generated Kaitai JS code is in this file you're looking at.</p>
+    <p>Available on github to make improvements <a href="https://github.com/N6UDP/mindustrystats">here</a></p>
+
+    <script>
+        // TODO: Deal with renamed sectors (I believe this is actually in the sector save file not settings.bin and thus not feasible)
+        let fileInput = document.getElementById('file-input')
+
+        /*
+        Generated sector map from the following hacky PowerShell with the following input files:
+        https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets/bundles/bundle.properties
+        https://raw.githubusercontent.com/Anuken/Mindustry/master/core/src/mindustry/content/SectorPresets.java
+        $namehash = @{}
+        gc .\bundle.properties |?{$_ -match "sector\.\S+\.name\s="} |%{
+            $namehash[$_.split(".")[1]]=$_.split("=")[1].trim()
+        }
+        $idhash = @{}
+        gc .\SectorPresets.java | %{
+            if($_ -match "new SectorPreset\(`"(?<name>\S+)`",\s*(?<planet>\S+),\s*(?<id>\d+)\)"){
+                $Matches.Remove(0)
+                $obj=[pscustomobject]$Matches
+                $obj | Select-Object *,@{n="friendlyname";e={$namehash[$_.name]}}
+            }
+        } | %{
+            $idhash[$_.planet+"-"+$_.id]=$_.friendlyname
+        }
+        $idhash | ConvertTo-Json | clip
+        */
+
+        var sectormap = {
+            "serpulo-101": "Salt Flats",
+            "serpulo-123": "Desolate Rift",
+            "serpulo-20": "Stained Mountains",
+            "erekir-36": "Intersect",
+            "erekir-39": "Ravine",
+            "erekir-25": "Marsh",
+            "serpulo-86": "Frozen Forest",
+            "serpulo-213": "Ruinous Shores",
+            "serpulo-216": "Naval Fortress",
+            "serpulo-93": "Planetary Launch Terminal",
+            "serpulo-21": "Fungal Pass",
+            "erekir-19": "Split",
+            "erekir-14": "Atlas",
+            "erekir-30": "Peaks",
+            "serpulo-108": "Coastline",
+            "serpulo-18": "The Craters",
+            "serpulo-15": "Ground Zero",
+            "erekir-10": "The Onset",
+            "erekir-88": "Aegis",
+            "erekir-29": "Basin",
+            "serpulo-227": "Impact 0078",
+            "serpulo-130": "Nuclear Production Complex",
+            "serpulo-134": "Overgrowth",
+            "serpulo-23": "Tar Fields",
+            "serpulo-81": "Biomass Synthesis Facility",
+            "erekir-41": "Lake",
+            "serpulo-165": "Extraction Outpost",
+            "erekir-43": "Caldera",
+            "serpulo-246": "Windswept Islands"
+        }
+
+
+        function LoadFile(event, loadSample) {
+
+            function csvify(items) {
+                // Lifted straight from https://stackoverflow.com/a/31536517
+                const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+                const header = Object.keys(items[0])
+                const csv = [
+                    header.join(','), // header row first
+                    ...items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+                ].join('\r\n')
+                return csv
+            }
+
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                // Parse file
+                var parsed = new MindustrySettings(new KaitaiStream(e.target.result))
+                var occupied = parsed.values.filter((x) => /serpulo-s-\d+-info/.test(x.key.string) && x.value.length != 11)
+                var decoded = occupied.map(x => { var data = exports.Ubjson.decode(x.value.bytes); data.name = x.key.string; return data })
+                document.getElementById('stats').textContent = decoded.length + " occupied sectors processed!"
+
+                // Store raw json
+                var rawjson = JSON.stringify(decoded, null, 2)
+                var file = new Blob([rawjson], { type: "application/json" })
+                var rawjsondownload = document.getElementById('rawjsondownload')
+                rawjsondownload.href = URL.createObjectURL(file)
+                rawjsondownload.download = "sectors.json"
+                document.getElementById('rawjson').textContent = rawjson
+
+                // Extract info for CSV and Graphs
+
+                function getsectorname(rawname) {
+                    var match = rawname.match(/(serpulo|erekir)-s-(\d+)-info/)
+                    var tmpname = match[1] + "-" + match[2]
+                    if (tmpname in sectormap) {
+                        return sectormap[tmpname]
+                    } else {
+                        return tmpname
+                    }
+                }
+
+                var sectorproduction = decoded.flatMap((sector) => {
+                    if (!sector.production) {
+                        return []
+                    }
+                    var result = Object.entries(sector.production).filter((x) => x[1].mean && x[1].mean > 0).map(
+                        (resource) => {
+                            return {
+                                sector: getsectorname(sector.name),
+                                type: resource[0],
+                                value: resource[1].mean
+                            }
+                        }
+                    )
+                    if (result) {
+                        return result
+                    } else {
+                        return []
+                    }
+                })
+
+                var sectorexports = decoded.flatMap((sector) => {
+                    if (!sector.export) {
+                        return []
+                    }
+                    var result = Object.entries(sector.export).filter((x) => x[1].mean && x[1].mean > 0).map(
+                        (resource) => {
+                            return {
+                                sector: getsectorname(sector.name),
+                                type: resource[0],
+                                value: resource[1].mean
+                            }
+                        }
+                    )
+                    if (result) {
+                        return result
+                    } else {
+                        return []
+                    }
+                })
+
+                // CSV filling
+                var productioncsv = csvify(sectorproduction)
+                var file = new Blob([productioncsv], { type: "text/csv" })
+                var productiondownload = document.getElementById('productiondownload')
+                productiondownload.href = URL.createObjectURL(file)
+                productiondownload.download = "production.csv"
+                document.getElementById('production').textContent = productioncsv
+
+                var exportscsv = csvify(sectorexports)
+                var file = new Blob([exportscsv], { type: "text/csv" })
+                var exportsdownload = document.getElementById('exportsdownload')
+                exportsdownload.href = URL.createObjectURL(file)
+                exportsdownload.download = "exports.csv"
+                document.getElementById('exports').textContent = exportscsv
+
+                //hierarchy creation for d3
+                function groupByProp(object, property, secondproperty, topname) {
+                    var grouped = object.reduce((group, o) => {
+                        category = o[property]
+                        group[category] = group[category] ?? []
+                        group[category].push(o)
+                        return group
+                    }, {})
+                    return {
+                        name: topname,
+                        children: Object.entries(grouped).map((x) => {
+                            return {
+                                name: x[0],
+                                children: x[1].map((sd) => {
+                                    return {
+                                        name: sd[secondproperty],
+                                        value: sd.value
+                                    }
+                                })
+                            }
+                        })
+                    }
+                }
+
+                function drawTreeMap(id, data) {
+                    // Mostly Straight from https://observablehq.com/@d3/zoomable-treemap 
+                    const { DOM, require } = new observablehq.Library;
+                    function name(d) {
+                        return d.ancestors().reverse().map(d => d.data.name).join("/")
+                    }
+                    const format = d3.format(",d")
+
+                    height = 924
+                    width = 954
+
+                    const x = d3.scaleLinear().rangeRound([0, width]);
+                    const y = d3.scaleLinear().rangeRound([0, height]);
+
+                    const svg = d3.select(id)
+                        .append("svg")
+                        .attr("width", height + 30)
+                        .attr("height", width + 30)
+                        .attr("viewBox", [0.5, -30.5, width, height + 30])
+                        .style("font", "10px sans-serif");
+
+                    let group = svg.append("g")
+                        .call(render, d3.treemap()
+                            .tile((node, x0, y0, x1, y1) => {
+                                d3.treemapBinary(node, 0, 0, width, height);
+                                for (const child of node.children) {
+                                    child.x0 = x0 + child.x0 / width * (x1 - x0);
+                                    child.x1 = x0 + child.x1 / width * (x1 - x0);
+                                    child.y0 = y0 + child.y0 / height * (y1 - y0);
+                                    child.y1 = y0 + child.y1 / height * (y1 - y0);
+                                }
+                            })
+                            (d3.hierarchy(data)
+                                .sum(d => d.value)
+                                .sort((a, b) => b.value - a.value)));
+
+                    function render(group, root) {
+                        const node = group
+                            .selectAll("g")
+                            .data(root.children.concat(root))
+                            .join("g");
+
+                        node.filter(d => d === root ? d.parent : d.children)
+                            .attr("cursor", "pointer")
+                            .on("click", (event, d) => d === root ? zoomout(root) : zoomin(d));
+
+                        node.append("title")
+                            .text(d => `${name(d)}\n${format(d.value)}`);
+
+                        node.append("rect")
+                            .attr("id", d => (d.leafUid = DOM.uid("leaf")).id)
+                            .attr("fill", d => d === root ? "#fff" : d.children ? "#ccc" : "#ddd")
+                            .attr("stroke", "#fff");
+
+                        node.append("clipPath")
+                            .attr("id", d => (d.clipUid = DOM.uid("clip")).id)
+                            .append("use")
+                            .attr("xlink:href", d => d.leafUid.href);
+
+                        node.append("text")
+                            .attr("clip-path", d => d.clipUid)
+                            .attr("font-weight", d => d === root ? "bold" : null)
+                            .selectAll("tspan")
+                            .data(d => (d === root ? name(d) : d.data.name).split(/(?=[A-Z][^A-Z])/g).concat(format(d.value)))
+                            .join("tspan")
+                            .attr("x", 3)
+                            .attr("y", (d, i, nodes) => `${(i === nodes.length - 1) * 0.3 + 1.1 + i * 0.9}em`)
+                            .attr("fill-opacity", (d, i, nodes) => i === nodes.length - 1 ? 0.7 : null)
+                            .attr("font-weight", (d, i, nodes) => i === nodes.length - 1 ? "normal" : null)
+                            .text(d => d);
+
+                        group.call(position, root);
+                    }
+
+                    function position(group, root) {
+                        group.selectAll("g")
+                            .attr("transform", d => d === root ? `translate(0,-30)` : `translate(${x(d.x0)},${y(d.y0)})`)
+                            .select("rect")
+                            .attr("width", d => d === root ? width : x(d.x1) - x(d.x0))
+                            .attr("height", d => d === root ? 30 : y(d.y1) - y(d.y0));
+                    }
+
+                    // When zooming in, draw the new nodes on top, and fade them in.
+                    function zoomin(d) {
+                        const group0 = group.attr("pointer-events", "none");
+                        const group1 = group = svg.append("g").call(render, d);
+
+                        x.domain([d.x0, d.x1]);
+                        y.domain([d.y0, d.y1]);
+
+                        svg.transition()
+                            .duration(750)
+                            .call(t => group0.transition(t).remove()
+                                .call(position, d.parent))
+                            .call(t => group1.transition(t)
+                                .attrTween("opacity", () => d3.interpolate(0, 1))
+                                .call(position, d));
+                    }
+
+                    // When zooming out, draw the old nodes on top, and fade them out.
+                    function zoomout(d) {
+                        const group0 = group.attr("pointer-events", "none");
+                        const group1 = group = svg.insert("g", "*").call(render, d.parent);
+
+                        x.domain([d.parent.x0, d.parent.x1]);
+                        y.domain([d.parent.y0, d.parent.y1]);
+
+                        svg.transition()
+                            .duration(750)
+                            .call(t => group0.transition(t).remove()
+                                .attrTween("opacity", () => d3.interpolate(1, 0))
+                                .call(position, d))
+                            .call(t => group1.transition(t)
+                                .call(position, d.parent));
+                    }
+                }
+
+                function drawSunBurst(id, data) {
+                    // Mostly straight from https://observablehq.com/@d3/zoomable-sunburst
+                    const format = d3.format(",d")
+                    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1))
+                    const partition = data => {
+                        const root = d3.hierarchy(data)
+                            .sum(d => d.value)
+                            .sort((a, b) => b.value - a.value);
+                        return d3.partition()
+                            .size([2 * Math.PI, root.height + 1])
+                            (root);
+                    }
+                    const arc = d3.arc()
+                        .startAngle(d => d.x0)
+                        .endAngle(d => d.x1)
+                        .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
+                        .padRadius(radius * 1.5)
+                        .innerRadius(d => d.y0 * radius)
+                        .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius - 1))
+
+                    const root = partition(data);
+                    var size = 954
+                    var width = size
+                    var radius = width / 6
+                    root.each(d => d.current = d);
+
+                    const svg = d3.select(id)
+                        .append("svg")
+                        .attr("width", size + 30)
+                        .attr("height", size + 30)
+                        .attr("viewBox", [0, 0, width, width])
+                        .style("font", "10px sans-serif");
+
+                    const g = svg.append("g")
+                        .attr("transform", `translate(${width / 2},${width / 2})`);
+
+                    const path = g.append("g")
+                        .selectAll("path")
+                        .data(root.descendants().slice(1))
+                        .join("path")
+                        .attr("fill", d => { while (d.depth > 1) d = d.parent; return color(d.data.name); })
+                        .attr("fill-opacity", d => arcVisible(d.current) ? (d.children ? 0.6 : 0.4) : 0)
+                        .attr("pointer-events", d => arcVisible(d.current) ? "auto" : "none")
+
+                        .attr("d", d => arc(d.current));
+
+                    path.filter(d => d.children)
+                        .style("cursor", "pointer")
+                        .on("click", clicked);
+
+                    path.append("title")
+                        .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
+
+                    const label = g.append("g")
+                        .attr("pointer-events", "none")
+                        .attr("text-anchor", "middle")
+                        .style("user-select", "none")
+                        .selectAll("text")
+                        .data(root.descendants().slice(1))
+                        .join("text")
+                        .attr("dy", "0.35em")
+                        .attr("fill-opacity", d => +labelVisible(d.current))
+                        .attr("transform", d => labelTransform(d.current))
+                        .text(d => d.data.name);
+
+                    const parent = g.append("circle")
+                        .datum(root)
+                        .attr("r", radius)
+                        .attr("fill", "none")
+                        .attr("pointer-events", "all")
+                        .on("click", clicked);
+
+                    function clicked(event, p) {
+                        parent.datum(p.parent || root);
+
+                        root.each(d => d.target = {
+                            x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                            x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
+                            y0: Math.max(0, d.y0 - p.depth),
+                            y1: Math.max(0, d.y1 - p.depth)
+                        });
+
+                        const t = g.transition().duration(750);
+
+                        // Transition the data on all arcs, even the ones that aren’t visible,
+                        // so that if this transition is interrupted, entering arcs will start
+                        // the next transition from the desired position.
+                        path.transition(t)
+                            .tween("data", d => {
+                                const i = d3.interpolate(d.current, d.target);
+                                return t => d.current = i(t);
+                            })
+                            .filter(function (d) {
+                                return +this.getAttribute("fill-opacity") || arcVisible(d.target);
+                            })
+                            .attr("fill-opacity", d => arcVisible(d.target) ? (d.children ? 0.6 : 0.4) : 0)
+                            .attr("pointer-events", d => arcVisible(d.target) ? "auto" : "none")
+
+                            .attrTween("d", d => () => arc(d.current));
+
+                        label.filter(function (d) {
+                            return +this.getAttribute("fill-opacity") || labelVisible(d.target);
+                        }).transition(t)
+                            .attr("fill-opacity", d => +labelVisible(d.target))
+                            .attrTween("transform", d => () => labelTransform(d.current));
+                    }
+
+                    function arcVisible(d) {
+                        return d.y1 <= 3 && d.y0 >= 1 && d.x1 > d.x0;
+                    }
+
+                    function labelVisible(d) {
+                        return d.y1 <= 3 && d.y0 >= 1 && (d.y1 - d.y0) * (d.x1 - d.x0) > 0.03;
+                    }
+
+                    function labelTransform(d) {
+                        const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+                        const y = (d.y0 + d.y1) / 2 * radius;
+                        return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+                    }
+                }
+
+                drawTreeMap("#prodbysectormap", groupByProp(sectorproduction, "sector", "type", "productionbysector"))
+                drawTreeMap("#prodbytypemap", groupByProp(sectorproduction, "type", "sector", "productionbytype"))
+                drawTreeMap("#exportbysectormap", groupByProp(sectorexports, "sector", "type", "exportbysector"))
+                drawTreeMap("#exportbytypemap", groupByProp(sectorexports, "type", "sector", "exportbytype"))
+
+                drawSunBurst("#prodbysectorsunburst", groupByProp(sectorproduction, "sector", "type", "productionbysector"))
+                drawSunBurst("#prodbytypesunburst", groupByProp(sectorproduction, "type", "sector", "productionbytype"))
+                drawSunBurst("#exportbysectorsunburst", groupByProp(sectorexports, "sector", "type", "exportbysector"))
+                drawSunBurst("#exportbytypesunburst", groupByProp(sectorexports, "type", "sector", "exportbytype"))
+            }
+            console.log(loadSample)
+            if (loadSample === undefined) {
+                if (fileInput.files.length == 1) {
+                    reader.readAsArrayBuffer(fileInput.files[0])
+                } else {
+                    document.getElementById('stats').textContent = "Please select a file."
+                }
+            } else {
+                fetch("settings.bin").then(
+                    (response) => response.blob()
+                ).then(
+                    (blob) => reader.readAsArrayBuffer(blob)
+                )
+            }
+        }
+        fileInput.onchange = LoadFile
+    </script>
+</body>
+
+</html>
